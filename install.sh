@@ -26,7 +26,10 @@ function is_installed() {
 
 ## Nvim
 echo -e "\nInstalling Nvim...\n"
+NVIM_CONFIG_DIR=~/.config/nvim
 NVIM_SHARE_DIR=~/.local/share/nvim
+
+echo $NVIM_SHARE_DIR
 
 ### 判断是否安装nvim
 if is_installed nvim; then
@@ -38,17 +41,18 @@ fi
 
 
 ### 判断配置文件是否存在
-if [[ -d ~/.config/nvim ]]; then
+if [[ -d $NVIM_CONFIG_DIR ]]; then
   echo -e "配置文件存在，先备份配置文件..."
-  mv ~/.config/nvim ~/.config/nvim.bak.$(date +%Y%m%d%H%M%S)
-  mkdir -p ~/.config/nvim
+  mv $NVIM_CONFIG_DIR $NVIM_CONFIG_DIR.bak.$(date +%Y%m%d%H%M%S)
+  mkdir -p $NVIM_CONFIG_DIR
 fi
+
 
 ### 判断共享文件是否存在
-if [[ ! $(is_debug) && -d $nvim_share_dir ]]; then
+if [[ -d $NVIM_SHARE_DIR ]]; then
   echo -e "共享文件存在，先备份共享文件..."
-  mv $nvim_share_dir $nvim_share_dir.bak.$(date +%y%m%d%h%m%s)
+  mv $NVIM_SHARE_DIR $NVIM_SHARE_DIR.bak.$(date +%Y%m%d%H%M%S)
 fi
 
-ln -s $DOTFILES_DIR/nvim/* ~/.config/nvim/
+ln -s $DOTFILES_DIR/nvim/* $NVIM_CONFIG_DIR/
 
