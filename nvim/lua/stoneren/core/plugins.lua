@@ -62,7 +62,12 @@ return require("packer").startup(function(use)
             require("stoneren.config.term-config")
         end
     }
-    -- End terminal
+
+    -- treesitter
+    use {
+        'nvim-treesitter/nvim-treesitter',
+        run = ':TSUpdate'
+    }
 
     -- telescope
     use {
