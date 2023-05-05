@@ -43,10 +43,26 @@ return require("packer").startup(function(use)
             require('stoneren.config.mini-config')
         end
     }
-    
+
+    -- git
     use {
-        "mg979/vim-visual-multi"
+        'lewis6991/gitsigns.nvim',
+        tag = 'release'
     }
+
+    -- 块选择
+    -- https://github.com/mg979/vim-visual-multi
+    use {"mg979/vim-visual-multi"}
+
+    -- Markdown
+    use({
+        "iamcco/markdown-preview.nvim",
+        run = "cd app && npm install",
+        setup = function()
+            vim.g.mkdp_filetypes = {"markdown"}
+        end,
+        ft = {"markdown"}
+    })
 
     -- which-key
     use {
@@ -123,7 +139,7 @@ return require("packer").startup(function(use)
         {'L3MON4D3/LuaSnip'} -- Required
         },
         config = function()
-          require('stoneren.config.lsp-config')
+            require('stoneren.config.lsp-config')
         end
     }
 

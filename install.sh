@@ -64,6 +64,14 @@ else
   brew install lua-language-server
 fi
 
+### fzf
+if is_installed fzf; then
+  echo -e "fzf已经安装，跳过安装"
+else
+  echo -e "fzf还没有安装，先安装fzf..."
+  brew install fzf
+fi
+
 
 ## Tmux
 echo -e "\nInstalling Tmux Configure...\n"
