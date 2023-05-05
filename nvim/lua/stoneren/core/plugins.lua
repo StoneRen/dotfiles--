@@ -60,6 +60,7 @@ return require("packer").startup(function(use)
         run = "cd app && npm install",
         setup = function()
             vim.g.mkdp_filetypes = {"markdown"}
+            vim.keymap.set("n", "<leader>mp", "<cmd>MarkdownPreviewToggle<cr>", {noremap = true, silent = true})
         end,
         ft = {"markdown"}
     })
