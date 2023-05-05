@@ -43,6 +43,10 @@ return require("packer").startup(function(use)
             require('stoneren.config.mini-config')
         end
     }
+    
+    use {
+        "mg979/vim-visual-multi"
+    }
 
     -- which-key
     use {

@@ -56,3 +56,32 @@ fi
 
 ln -s $DOTFILES_DIR/nvim/* $NVIM_CONFIG_DIR/
 
+### lua-language-server
+if is_installed lua-language-server; then
+  echo -e "lua-language-server已经安装，跳过安装"
+else
+  echo -e "lua-language-server还没有安装，先安装lua-language-server..."
+  brew install lua-language-server
+fi
+
+
+## Tmux
+echo -e "\nInstalling Tmux Configure...\n"
+TMUX_CONFIG_FILE=~/.tmux.conf
+
+### 判断是否安装tmux
+if is_installed tmux; then
+  echo -e "tmux已经安装，跳过安装"
+else
+  echo -e "tmux还没有安装，先安装tmux..."
+  brew install tmux
+fi
+
+### 判断配置文件是否存在
+if [[ -f $TMUX_CONFIG_FILE ]]; then
+  echo -e "配置文件存在，先备份配置文件..."
+  mv $TMUX_CONFIG_FILE $TMUX_CONFIG_FILE.bak.$(date +%Y%m%d%H%M%S)
+fi
+
+### 注意：不能用软链接
+ln $DOTFILES_DIR/tmux/.tmux.conf $TMUX_CONFIG_FILE
