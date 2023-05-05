@@ -12,12 +12,31 @@ bind('n', '<leader>fb', builtin.buffers, {})
 bind('n', '<leader>fh', builtin.help_tags, {})
 
 telescope.load_extension("live_grep_args")
-bind('n', '<leader>fg', ":Telescope live_grep_args<CR>" )
+bind('n', '<leader>fg', ":Telescope live_grep_args<CR>", {})
+
+-- local lga_actions = require("telescope-live-grep-args.actions")
+-- telescope.setup {
+--     extensions = {
+--         live_grep_args = {
+--             auto_quoting = true, -- enable/disable auto-quoting
+--             -- define mappings, e.g.
+--             mappings = { -- extend mappings
+--                 i = {
+--                     ["<C-k>"] = lga_actions.quote_prompt(),
+--                     ["<C-i>"] = lga_actions.quote_prompt({
+--                         postfix = " --iglob "
+--                     })
+--                 }
+--             }
+--         }
+--     }
+-- }
+
 telescope.load_extension('fzf')
 
 telescope.load_extension("file_browser")
-bind('n', '<leader>e',":Telescope file_browser path=%:p:h select_buffer=true<CR>", {})
-bind('n', '<leader>te',":tabnew | Telescope file_browser path=%:p:h select_buffer=true<CR>", {})
+bind('n', '<leader>e', ":Telescope file_browser path=%:p:h select_buffer=true<CR>", {})
+bind('n', '<leader>te', ":tabnew | Telescope file_browser path=%:p:h select_buffer=true<CR>", {})
 
 --[[
 | Insert / Normal | fb_actions           | Description                                                                      |
@@ -42,10 +61,10 @@ bind('n', '<leader>te',":tabnew | Telescope file_browser path=%:p:h select_buffe
 --]]
 
 telescope.load_extension("frecency")
-bind('n','<leader>fr',":Telescope frecency<CR>", {})
+bind('n', '<leader>fr', ":Telescope frecency<CR>", {})
 
 telescope.load_extension('project')
-bind('n', '<leader>fp',":Telescope project<CR>", {})
+bind('n', '<leader>fp', ":Telescope project<CR>", {})
 -- 在打开项目窗口的时候，可以采用如下快捷键
 -- 下面全是在插入模式下
 -- <c-w> change workspace

@@ -76,15 +76,30 @@ return require("packer").startup(function(use)
         config = function()
             require('stoneren.config.telescope-config')
         end,
-        requires = {'nvim-lua/plenary.nvim', "nvim-telescope/telescope-live-grep-args.nvim",
-                    'nvim-telescope/telescope-project.nvim', {
+        requires = {{
             "nvim-telescope/telescope-fzf-native.nvim",
             run = 'make'
-        }, "nvim-telescope/telescope-file-browser.nvim", {
+        }, {
             "nvim-telescope/telescope-frecency.nvim",
             requires = {"kkharji/sqlite.lua"}
-        }}
+        }, 'nvim-lua/plenary.nvim', "nvim-telescope/telescope-live-grep-args.nvim",
+                    'nvim-telescope/telescope-project.nvim', "nvim-telescope/telescope-file-browser.nvim"}
     }
+
+    -- autocompletion
+    use("onsails/lspkind.nvim") -- vs-code like icons for autocompletion
+    use("hrsh7th/cmp-buffer") -- source for text in buffer
+    use("hrsh7th/cmp-path") -- source for file system paths
+    -- snippets
+    use("L3MON4D3/LuaSnip") -- snippet engine
+    use("saadparwaiz1/cmp_luasnip") -- for autocompletion
+    use("rafamadriz/friendly-snippets") -- useful snippets
+    use({
+        "hrsh7th/nvim-cmp",
+        config = function()
+            require("stoneren.config.amp-config")
+        end
+    }) -- completion plugin
 
     if packer_bootstrap then
         require("packer").sync()
