@@ -14,24 +14,6 @@ bind('n', '<leader>fh', builtin.help_tags, {})
 telescope.load_extension("live_grep_args")
 bind('n', '<leader>fg', ":Telescope live_grep_args<CR>", {})
 
--- local lga_actions = require("telescope-live-grep-args.actions")
--- telescope.setup {
---     extensions = {
---         live_grep_args = {
---             auto_quoting = true, -- enable/disable auto-quoting
---             -- define mappings, e.g.
---             mappings = { -- extend mappings
---                 i = {
---                     ["<C-k>"] = lga_actions.quote_prompt(),
---                     ["<C-i>"] = lga_actions.quote_prompt({
---                         postfix = " --iglob "
---                     })
---                 }
---             }
---         }
---     }
--- }
-
 telescope.load_extension('fzf')
 
 telescope.load_extension("file_browser")
