@@ -34,10 +34,14 @@ expr: 通过vimscript或lua计算 {rhs} 的值
 bind("n", "<leader>w", ":w<CR>") -- save
 bind("n", "<leader>q", ":q<CR>") -- quit
 bind("n", "<leader>qq", ":qa!<CR>") -- quit all without saving
+
+bind("n","<leader>,",":tabnew ~/.config/nvim/init.lua")
+
 -- bind("n", "<leader>e", ":Explore<CR>") -- open file explorer
 -- bind("n","<leader>te",":Texplore<CR>")
 -- select all
 bind('n', '<leader>a', ':keepjumps normal! ggVG<cr>', {}, "全选")
+
 
 -- better up/down
 bind("n", "j", "v:count == 0 ? 'gj' : 'j'", {
