@@ -1,3 +1,4 @@
+require("mason").setup()
 local lsp = require('lsp-zero').preset({})
 local bind = vim.keymap.set
 
