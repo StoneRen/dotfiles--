@@ -13,12 +13,15 @@ opt.number = true
 opt.relativenumber = true
 
 -- tabs & indentation
--- 是否将tab转换为空格
+-- 缩进时是否用空格表示
 opt.expandtab = true
 opt.autoindent = true
 -- Tab set to two spaces
+--- 1个tab显示几个空格的长度
 opt.tabstop = 2
+--- 自动缩进空白字符的个数
 opt.shiftwidth = 2
+--- 在编辑模式下按退格键缩回的长度
 opt.softtabstop = 2
 
 -- line wrapping
@@ -36,7 +39,7 @@ opt.cursorline = true
 
 -- appearance
 if os.getenv('COLORTERM') == 'truecolor' or os.getenv('COLORTERM') == '24bit' then
-  opt.termguicolors = true
+    opt.termguicolors = true
 end
 opt.background = "dark"
 opt.signcolumn = "yes"
@@ -44,13 +47,12 @@ opt.signcolumn = "yes"
 -- backspace
 opt.backspace = "indent,eol,start"
 
---clipboard
+-- clipboard
 opt.clipboard = "unnamedplus"
 
 -- When opening a window put it right or below the current one
 vim.opt.splitright = true
 vim.opt.splitbelow = true
-
 
 -- 在遇到破折号的时候当成一个整体
 -- opt.iskeyword:append("-")
