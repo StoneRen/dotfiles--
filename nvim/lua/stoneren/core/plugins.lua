@@ -33,7 +33,6 @@ return require("packer").startup(function(use)
     end
   })
 
-
   -- maximizes and restores current window
   use({ "szw/vim-maximizer" })
 
@@ -85,6 +84,7 @@ return require("packer").startup(function(use)
       require("stoneren.config.term-config")
     end
   }
+
 
   -- treesitter
   use {
