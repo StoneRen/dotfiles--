@@ -31,6 +31,7 @@ expr: 通过vimscript或lua计算 {rhs} 的值
 --]]
 
 -- basic keymaps
+bind("n","<D-s>","<cmd>w<CR>")
 bind("n", "<leader>w", ":w<CR>") -- save
 bind("n", "<leader>q", ":q<CR>") -- quit
 bind("n", "<leader>qq", ":qa!<CR>") -- quit all without saving

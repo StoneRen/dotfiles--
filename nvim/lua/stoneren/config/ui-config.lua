@@ -1,4 +1,4 @@
-local alpha_value = 0.8
+local alpha_value = 0.9
 if os.getenv('COLORTERM') == 'truecolor' or os.getenv('COLORTERM') == '24bit' or vim.g.neovide then
   local alpha = function()
     return string.format("%x", math.floor(alpha_value))
