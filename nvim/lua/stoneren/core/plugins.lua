@@ -32,6 +32,9 @@ return require("packer").startup(function(use)
       require("stoneren.config.ui-config")
     end
   })
+  use({
+    'nvim-tree/nvim-web-devicons',
+  })
 
   -- maximizes and restores current window
   use({ "szw/vim-maximizer" })
