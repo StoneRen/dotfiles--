@@ -73,3 +73,13 @@ require('mini.trailspace').setup {
   bind("n", "<leader>ct", "<cmd>lua MiniTrailspace.trim()<CR>"),
   bind("n", "<leader>cl", "<cmd>lua MiniTrailspace.trim_last_lines()<CR>")
 }
+
+-- https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-files.md
+-- Press j/k to navigate down/up.
+-- Press l to expand entry under cursor: show directory or open file in the most recent window.
+-- Press h to go to parent directory.
+-- Type g? for more information about other available mappings.
+-- Move as in any other buffer ($, G, f/t, etc.).
+-- require('mini.files').setup {
+--   bind("n", "<leader>fo", "<cmd>lua MiniFiles.open()<CR>")
+-- }

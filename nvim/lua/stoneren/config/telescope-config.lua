@@ -1,5 +1,5 @@
 local telescope = require('telescope')
-local acitons = require('telescope.actions')
+-- local acitons = require('telescope.actions')
 local bind = vim.keymap.set
 local builtin = require('telescope.builtin')
 

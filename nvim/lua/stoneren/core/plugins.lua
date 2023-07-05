@@ -42,7 +42,6 @@ return require("packer").startup(function(use)
   -- MiniNvim
   use {
     'echasnovski/mini.nvim',
-    branch = 'stable',
     config = function()
       require('stoneren.config.mini-config')
     end
