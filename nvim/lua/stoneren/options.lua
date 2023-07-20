@@ -1,4 +1,10 @@
 local opt = vim.opt
+local global = vim.g
+HOME = os.getenv("HOME")
+
+-- Map <leader> to space
+global.mapleader = ' '
+global.maplocalleader = ' '
 
 -- Editor Options
 opt.encoding = "UTF-8"
@@ -29,6 +35,8 @@ opt.softtabstop = 2
 opt.wrap = true
 -- 保留虚拟行的缩进，只在启用wrap时可见
 opt.breakindent = true
+-- 当行被阶段时候显示的字符
+opt.showbreak = "↪"
 
 -- search settings
 opt.ignorecase = true
@@ -51,8 +59,22 @@ opt.backspace = "indent,eol,start"
 opt.clipboard = "unnamedplus"
 
 -- When opening a window put it right or below the current one
-vim.opt.splitright = true
-vim.opt.splitbelow = true
+opt.splitright = true
+opt.splitbelow = true
+
+-- 永远显示 tabline
+-- vim.o.showtabline = 2
+-- 使用增强状态栏插件后不再需要 vim 的模式提示
+vim.o.showmode = false
 
 -- 在遇到破折号的时候当成一个整体
 -- opt.iskeyword:append("-")
+
+-- Disable beep and flash
+vim.cmd([[
+    set noeb
+    filetype    plugin indent on
+    exec        "nohlsearch"
+    syntax      enable
+    syntax      on
+]])
