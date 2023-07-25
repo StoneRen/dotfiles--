@@ -5,11 +5,11 @@ local builtin = require('telescope.builtin')
 
 telescope.setup {}
 
-bind('n', '<leader>ff', builtin.find_files, {})
-bind('n', '<leader>fs', builtin.grep_string, {})
-bind('n', '<leader>fg', builtin.live_grep, {})
-bind('n', '<leader>fb', builtin.buffers, {})
-bind('n', '<leader>fh', builtin.help_tags, {})
+bind('n', '<leader>tf', builtin.find_files, {})
+bind('n', '<leader>ts', builtin.grep_string, {})
+bind('n', '<leader>tg', builtin.live_grep, {})
+bind('n', '<leader>tb', builtin.buffers, {})
+bind('n', '<leader>th', builtin.help_tags, {})
 
 telescope.load_extension("live_grep_args")
 bind('n', '<leader>fg', ":Telescope live_grep_args<CR>", {})

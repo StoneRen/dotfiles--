@@ -51,8 +51,15 @@ opt.backspace = "indent,eol,start"
 opt.clipboard = "unnamedplus"
 
 -- When opening a window put it right or below the current one
-vim.opt.splitright = true
-vim.opt.splitbelow = true
+opt.splitright = true
+opt.splitbelow = true
 
 -- 在遇到破折号的时候当成一个整体
 -- opt.iskeyword:append("-")
+vim.cmd([[
+    set noeb
+    filetype    plugin indent on
+    exec        "nohlsearch"
+    syntax      enable
+    syntax      on
+]])

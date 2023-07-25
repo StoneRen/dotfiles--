@@ -20,54 +20,88 @@ augroup packer_user_config
 augroup end
 ]])
 
-return require("packer").startup(function(use)
-  -- Packer
-  use("wbthomason/packer.nvim")
-
-  -- UI
-  use('Tsuzat/NeoSolarized.nvim')
-  use({
-    "rebelot/kanagawa.nvim",
-    config = function()
-      require("stoneren.config.ui-config")
-    end
-  })
-  use({
-    'nvim-tree/nvim-web-devicons',
-  })
-
-  -- maximizes and restores current window
-  use({ "szw/vim-maximizer" })
-
-  -- MiniNvim
+local useBasic = function(use)
   use {
-    'echasnovski/mini.nvim',
-    config = function()
-      require('stoneren.config.mini-config')
-    end
+    'nvim-tree/nvim-web-devicons',
   }
 
-  -- git
   use {
-    'lewis6991/gitsigns.nvim',
-    -- tag = 'release'
+    'windwp/nvim-ts-autotag',
+    config = function()
+      require("nvim-ts-autotag").setup()
+    end,
+  }
+
+  -- maximizes and restores current window
+  use { "szw/vim-maximizer" }
+
+  use {
+    'windwp/nvim-autopairs',
+    config = function()
+      require('nvim-autopairs').setup({
+        enable_check_bracket_line = false,
+        ignored_next_char = "[%w%.]", -- will ignore alphanumeric and `.` symbol
+      })
+    end,
   }
 
   -- 块选择
   -- https://github.com/mg979/vim-visual-multi
   use { "mg979/vim-visual-multi" }
 
-  -- Markdown
-  use({
-    "iamcco/markdown-preview.nvim",
-    run = "cd app && npm install",
-    setup = function()
-      vim.g.mkdp_filetypes = { "markdown" }
-      vim.keymap.set("n", "<leader>mp", "<cmd>MarkdownPreviewToggle<cr>", { noremap = true, silent = true })
+  use {
+    "folke/todo-comments.nvim",
+    dependencies = { "nvim-lua/plenary.nvim" },
+    config = function()
+      require("todo-comments").setup({
+        keywords = {
+          FIX = {
+            color = "error",                            -- can be a hex color, or a named color (see below)
+            alt = { "FIXME", "BUG", "FIXIT", "ISSUE" }, -- a set of other keywords that all map to this FIX keywords
+            -- signs = false, -- configure signs for some keywords individually
+          },
+          TODO = { color = "todo" },
+          HACK = { color = "warning" },
+          WARN = { color = "warning", alt = { "WARNING", "XXX" } },
+          PERF = { alt = { "OPTIM", "PERFORMANCE", "OPTIMIZE" } },
+          NOTE = { color = "info", alt = { "INFO" } },
+          TEST = { color = "test", alt = { "TESTING", "PASSED", "FAILED" } },
+        },
+        colors = {
+          error = { "DiagnosticError", "ErrorMsg", "#DC2626" },
+          warning = { "DiagnosticWarn", "WarningMsg", "#FBBF24" },
+          todo = { "DiagnosticOk", "#2563EB" },
+          info = { "DiagnosticInfo", "#10B981" },
+          default = { "Identifier", "#7C3AED" },
+          test = { "Identifier", "#FF00FF" },
+        },
+      })
     end,
-    ft = { "markdown" }
-  })
+  }
+end
 
+
+local useUI = function(use)
+  use 'Tsuzat/NeoSolarized.nvim'
+  use {
+    'rebelot/kanagawa.nvim',
+    config = function()
+      require('stoneren.config.ui')
+    end
+  }
+end
+
+local useMini = function(use)
+  use {
+    'echasnovski/mini.nvim',
+    config = function()
+      require('stoneren.config.mini')
+    end
+  }
+end
+
+
+local useKeyMap = function(use)
   -- which-key
   use {
     "folke/which-key.nvim",
@@ -77,29 +111,67 @@ return require("packer").startup(function(use)
       require("which-key").setup {}
     end
   }
+end
 
-  -- terminal
+local useGit = function(use)
+  use {
+    'lewis6991/gitsigns.nvim',
+    -- tag = 'release'
+  }
+
+  use {
+    "lewis6991/gitsigns.nvim",
+    dependencies = { "nvim-lua/plenary.nvim" },
+    config = function()
+      require("gitsigns").setup({
+        preview_config = {
+          border = "rounded",
+        },
+      })
+    end,
+  }
+  use { "sindrets/diffview.nvim", dependencies = { "nvim-lua/plenary.nvim" } }
+end
+
+local useTerminal = function(use)
   use {
     "akinsho/toggleterm.nvim",
     tag = '*',
     config = function()
-      require("stoneren.config.term-config")
+      require("stoneren.config.term")
     end
   }
+end
 
-
-  -- treesitter
+local useTreesitter = function(use)
   use {
     'nvim-treesitter/nvim-treesitter',
     run = ':TSUpdate'
   }
+end
 
-  -- telescope
+local useMarkdown = function(use)
+  use({
+    "iamcco/markdown-preview.nvim",
+    run = "cd app && npm install",
+    setup = function()
+      vim.g.mkdp_filetypes = { "markdown" }
+      vim.keymap.set("n", "<leader>mp", "<cmd>MarkdownPreviewToggle<cr>", { noremap = true, silent = true })
+    end,
+    ft = { "markdown" }
+  })
+end
+
+local useLang = function(use)
+  useMarkdown(use)
+end
+
+local useTelescope = function(use)
   use {
     'nvim-telescope/telescope.nvim',
     tag = '0.1.x',
     config = function()
-      require('stoneren.config.telescope-config')
+      require('stoneren.config.telescope')
     end,
     requires = { {
       "nvim-telescope/telescope-fzf-native.nvim",
@@ -110,11 +182,15 @@ return require("packer").startup(function(use)
     }, 'nvim-lua/plenary.nvim', "nvim-telescope/telescope-live-grep-args.nvim",
       'nvim-telescope/telescope-project.nvim', "nvim-telescope/telescope-file-browser.nvim" }
   }
+end
 
+local useAcp = function(use)
   -- autocompletion
-  use("onsails/lspkind.nvim")         -- vs-code like icons for autocompletion
-  use("hrsh7th/cmp-buffer")           -- source for text in buffer
-  use("hrsh7th/cmp-path")             -- source for file system paths
+  use { "hrsh7th/cmp-nvim-lsp" }
+  use { "hrsh7th/cmp-buffer" }
+  use { "hrsh7th/cmp-path" }
+  use { "hrsh7th/cmp-cmdline" }
+  use { "onsails/lspkind.nvim" }
   -- snippets
   use("L3MON4D3/LuaSnip")             -- snippet engine
   use("saadparwaiz1/cmp_luasnip")     -- for autocompletion
@@ -122,11 +198,12 @@ return require("packer").startup(function(use)
   use({
     "hrsh7th/nvim-cmp",
     config = function()
-      require("stoneren.config.amp-config")
+      require("stoneren.config.acp")
     end
   }) -- completion plugin
+end
 
-  -- lsp
+local useLsp = function(use)
   use {
     'VonHeikemen/lsp-zero.nvim',
     branch = 'v2.x',
@@ -143,10 +220,12 @@ return require("packer").startup(function(use)
       { 'L3MON4D3/LuaSnip' }                      -- Required
     },
     config = function()
-      require('stoneren.config.lsp-config')
+      require('stoneren.config.lsp')
     end
   }
+end
 
+local useMason = function(use)
   use {
     "jay-babu/mason-null-ls.nvim",
     event = { "BufReadPre", "BufNewFile" },
@@ -160,8 +239,26 @@ return require("packer").startup(function(use)
       })
     end
   }
+end
 
-  ----
+return require("packer").startup(function(use)
+  -- Packer
+  use 'wbthomason/packer.nvim'
+
+  useUI(use)
+  useBasic(use)
+  useKeyMap(use)
+  useMini(use)
+  useTerminal(use)
+  useGit(use)
+
+  useLang(use)
+  useTreesitter(use)
+  useTelescope(use)
+  useAcp(use)
+  useLsp(use)
+  useMason(use)
+
 
   if packer_bootstrap then
     require("packer").sync()
