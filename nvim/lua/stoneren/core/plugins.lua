@@ -33,7 +33,7 @@ local useBasic = function(use)
   }
 
   -- maximizes and restores current window
-  use { "szw/vim-maximizer" }
+  -- use { "szw/vim-maximizer" }
 
   use {
     'windwp/nvim-autopairs',
@@ -45,13 +45,30 @@ local useBasic = function(use)
     end,
   }
 
+  use {
+    "nvim-neo-tree/neo-tree.nvim",
+    branch = "v3.x",
+    requires = {
+      "nvim-lua/plenary.nvim",
+      "nvim-tree/nvim-web-devicons", -- not strictly required, but recommended
+      "MunifTanjim/nui.nvim",
+    },
+    config = function()
+      local bind = vim.keymap.set
+      local keyopt = { noremap = true, silent = true }
+      bind("n", '<F8>', ":Neotree position=float source=buffers action=show toggle=true<CR>", keyopt)
+      bind("n", '<F9>', ":Neotree position=right source=filesystem action=show toggle=true<CR>", keyopt)
+      bind("n", '<F10>', ":Neotree position=float source=git_status action=show toggle=true<CR>", keyopt)
+    end
+  }
+
   -- 块选择
   -- https://github.com/mg979/vim-visual-multi
   use { "mg979/vim-visual-multi" }
 
   use {
     "folke/todo-comments.nvim",
-    dependencies = { "nvim-lua/plenary.nvim" },
+    requires = { "nvim-lua/plenary.nvim" },
     config = function()
       require("todo-comments").setup({
         keywords = {
@@ -81,14 +98,44 @@ local useBasic = function(use)
 end
 
 
+local useNotify = function(use)
+  use {
+    'rcarriga/nvim-notify',
+    config = function()
+      local notify = require("notify").setup {
+        background_colour = "#000000"
+      }
+      notify("welcome")
+    end
+  }
+end
+
+local useEnhance = function(use)
+  -- useNotify(use)
+end
+
+
 local useUI = function(use)
-  use 'Tsuzat/NeoSolarized.nvim'
+  -- use 'Tsuzat/NeoSolarized.nvim'
   use {
     'rebelot/kanagawa.nvim',
     config = function()
       require('stoneren.config.ui')
     end
   }
+
+  -- use({
+  --   "utilyre/barbecue.nvim",
+  --   tag = "*",
+  --   requires = {
+  --     "SmiteshP/nvim-navic",
+  --     "nvim-tree/nvim-web-devicons", -- optional dependency
+  --   },
+  --   after = "nvim-web-devicons",     -- keep this if you're using NvChad
+  --   config = function()
+  --     require("barbecue").setup()
+  --   end,
+  -- })
 end
 
 local useMini = function(use)
@@ -115,13 +162,8 @@ end
 
 local useGit = function(use)
   use {
-    'lewis6991/gitsigns.nvim',
-    -- tag = 'release'
-  }
-
-  use {
     "lewis6991/gitsigns.nvim",
-    dependencies = { "nvim-lua/plenary.nvim" },
+    requires = { "nvim-lua/plenary.nvim" },
     config = function()
       require("gitsigns").setup({
         preview_config = {
@@ -130,7 +172,7 @@ local useGit = function(use)
       })
     end,
   }
-  use { "sindrets/diffview.nvim", dependencies = { "nvim-lua/plenary.nvim" } }
+  use { "sindrets/diffview.nvim", requires = { "nvim-lua/plenary.nvim" } }
 end
 
 local useTerminal = function(use)
@@ -247,6 +289,8 @@ return require("packer").startup(function(use)
 
   useUI(use)
   useBasic(use)
+  useEnhance(use)
+
   useKeyMap(use)
   useMini(use)
   useTerminal(use)

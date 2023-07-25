@@ -38,8 +38,10 @@ opt.smartcase = true
 opt.cursorline = true
 
 -- appearance
-if os.getenv('COLORTERM') == 'truecolor' or os.getenv('COLORTERM') == '24bit' then
+if os.getenv('COLORTERM') == 'truecolor' or os.getenv('COLORTERM') == '24bit' or vim.g.neovide then
     opt.termguicolors = true
+    -- vim.cmd([[ set t_8f=^[[38;2;%lu;%lu;%lum ]])
+    -- vim.cmd([[ set t_8b=^[[48;2;%lu;%lu;%lum ]])
 end
 opt.background = "dark"
 opt.signcolumn = "yes"
@@ -56,10 +58,10 @@ opt.splitbelow = true
 
 -- 在遇到破折号的时候当成一个整体
 -- opt.iskeyword:append("-")
-vim.cmd([[
-    set noeb
-    filetype    plugin indent on
-    exec        "nohlsearch"
-    syntax      enable
-    syntax      on
-]])
+-- vim.cmd([[
+--     set noeb
+--     filetype    plugin indent on
+--     exec        "nohlsearch"
+--     syntax      enable
+--     syntax      on
+-- ]])

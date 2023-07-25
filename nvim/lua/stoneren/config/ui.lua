@@ -5,9 +5,11 @@ if os.getenv('COLORTERM') == 'truecolor' or os.getenv('COLORTERM') == '24bit' or
   local alpha = function()
     return string.format("%x", math.floor(alpha_value))
   end
-  g.neovide_transparency = alpha_value
+  if g.neovide then
+    g.neovide_transparency = alpha_value
+    g.neovide_background_color = "#0f1117" .. alpha()
+  end
   g.transparency = alpha_value
-  g.neovide_background_color = "#0f1117" .. alpha()
   cmd.colorscheme('kanagawa')
 else
   print 'not truecolor'

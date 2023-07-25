@@ -13,7 +13,10 @@ require('mini.comment').setup({
   },
 })
 
--- https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-surround.md#default
+-- https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-starter.md
+-- require('mini.starter').setup()
+
+-- https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-surround.md#default-config
 require('mini.surround').setup({
   -- Module mappings. Use `''` (empty string) to disable one.
   mappings = {
@@ -54,13 +57,13 @@ require('mini.ai').setup {
 require('mini.indentscope').setup()
 
 
--- https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-pairs.md#default
+-- https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-pairs.md#default-config
 require('mini.pairs').setup()
 
--- https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-starter.md#default
+-- https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-starter.md#default-config
 -- require('mini.starter').setup()
 
--- https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-statusline.md#default
+-- https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-statusline.md#default-config
 require('mini.statusline').setup()
 
 require('mini.cursorword').setup()
