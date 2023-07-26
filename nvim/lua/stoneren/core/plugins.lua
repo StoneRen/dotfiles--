@@ -20,31 +20,14 @@ augroup packer_user_config
 augroup end
 ]])
 
-local useBasic = function(use)
+local useTreesitter = function(use)
   use {
-    'nvim-tree/nvim-web-devicons',
+    'nvim-treesitter/nvim-treesitter',
+    run = ':TSUpdate'
   }
+end
 
-  use {
-    'windwp/nvim-ts-autotag',
-    config = function()
-      require("nvim-ts-autotag").setup()
-    end,
-  }
-
-  -- maximizes and restores current window
-  -- use { "szw/vim-maximizer" }
-
-  use {
-    'windwp/nvim-autopairs',
-    config = function()
-      require('nvim-autopairs').setup({
-        enable_check_bracket_line = false,
-        ignored_next_char = "[%w%.]", -- will ignore alphanumeric and `.` symbol
-      })
-    end,
-  }
-
+local useNeoTree = function(use)
   use {
     "nvim-neo-tree/neo-tree.nvim",
     branch = "v3.x",
@@ -61,40 +44,74 @@ local useBasic = function(use)
       bind("n", '<F10>', ":Neotree position=float source=git_status action=show toggle=true<CR>", keyopt)
     end
   }
+end
 
-  -- 块选择
-  -- https://github.com/mg979/vim-visual-multi
-  use { "mg979/vim-visual-multi" }
+-- 有问题，使用后，没有启动界面了
+local useTodo = function(use)
+  -- use {
+  --   "folke/todo-comments.nvim",
+  --   requires = { "nvim-lua/plenary.nvim" },
+  --   config = function()
+  --     require("todo-comments").setup({
+  --       keywords = {
+  --         FIX = {
+  --           color = "error",                            -- can be a hex color, or a named color (see below)
+  --           alt = { "FIXME", "BUG", "FIXIT", "ISSUE" }, -- a set of other keywords that all map to this FIX keywords
+  --           -- signs = false, -- configure signs for some keywords individually
+  --         },
+  --         TODO = { color = "todo" },
+  --         HACK = { color = "warning" },
+  --         WARN = { color = "warning", alt = { "WARNING", "XXX" } },
+  --         PERF = { alt = { "OPTIM", "PERFORMANCE", "OPTIMIZE" } },
+  --         NOTE = { color = "info", alt = { "INFO" } },
+  --         TEST = { color = "test", alt = { "TESTING", "PASSED", "FAILED" } },
+  --       },
+  --       colors = {
+  --         error = { "DiagnosticError", "ErrorMsg", "#DC2626" },
+  --         warning = { "DiagnosticWarn", "WarningMsg", "#FBBF24" },
+  --         todo = { "DiagnosticOk", "#2563EB" },
+  --         info = { "DiagnosticInfo", "#10B981" },
+  --         default = { "Identifier", "#7C3AED" },
+  --         test = { "Identifier", "#FF00FF" },
+  --       },
+  --     })
+  --   end,
+  -- }
+end
+
+local useBasic = function(use)
+  use {
+    'nvim-tree/nvim-web-devicons',
+  }
+
+  use { 'codota/tabnine-nvim', run = "./dl_binaries.sh" }
+
+  useTreesitter(use)
+  useNeoTree(use)
+  -- useTodo(use)
 
   use {
-    "folke/todo-comments.nvim",
-    requires = { "nvim-lua/plenary.nvim" },
+    'windwp/nvim-ts-autotag',
     config = function()
-      require("todo-comments").setup({
-        keywords = {
-          FIX = {
-            color = "error",                            -- can be a hex color, or a named color (see below)
-            alt = { "FIXME", "BUG", "FIXIT", "ISSUE" }, -- a set of other keywords that all map to this FIX keywords
-            -- signs = false, -- configure signs for some keywords individually
-          },
-          TODO = { color = "todo" },
-          HACK = { color = "warning" },
-          WARN = { color = "warning", alt = { "WARNING", "XXX" } },
-          PERF = { alt = { "OPTIM", "PERFORMANCE", "OPTIMIZE" } },
-          NOTE = { color = "info", alt = { "INFO" } },
-          TEST = { color = "test", alt = { "TESTING", "PASSED", "FAILED" } },
-        },
-        colors = {
-          error = { "DiagnosticError", "ErrorMsg", "#DC2626" },
-          warning = { "DiagnosticWarn", "WarningMsg", "#FBBF24" },
-          todo = { "DiagnosticOk", "#2563EB" },
-          info = { "DiagnosticInfo", "#10B981" },
-          default = { "Identifier", "#7C3AED" },
-          test = { "Identifier", "#FF00FF" },
-        },
+      require("nvim-ts-autotag").setup()
+    end,
+  }
+
+  -- -- maximizes and restores current window
+  -- -- use { "szw/vim-maximizer" }
+
+  use {
+    'windwp/nvim-autopairs',
+    config = function()
+      require('nvim-autopairs').setup({
+        enable_check_bracket_line = false,
+        ignored_next_char = "[%w%.]", -- will ignore alphanumeric and `.` symbol
       })
     end,
   }
+  -- 块选择
+  -- https://github.com/mg979/vim-visual-multi
+  use { "mg979/vim-visual-multi" }
 end
 
 
@@ -102,16 +119,17 @@ local useNotify = function(use)
   use {
     'rcarriga/nvim-notify',
     config = function()
-      local notify = require("notify").setup {
+      local notify = require("notify")
+      notify.setup {
         background_colour = "#000000"
       }
-      notify("welcome")
+      -- notify("welcome")
     end
   }
 end
 
 local useEnhance = function(use)
-  -- useNotify(use)
+  useNotify(use)
 end
 
 
@@ -162,6 +180,9 @@ end
 
 local useGit = function(use)
   use {
+    'f-person/git-blame.nvim'
+  }
+  use {
     "lewis6991/gitsigns.nvim",
     requires = { "nvim-lua/plenary.nvim" },
     config = function()
@@ -172,7 +193,13 @@ local useGit = function(use)
       })
     end,
   }
-  use { "sindrets/diffview.nvim", requires = { "nvim-lua/plenary.nvim" } }
+  use {
+    "sindrets/diffview.nvim",
+    requires = { "nvim-lua/plenary.nvim" },
+    config = function()
+      require('stoneren.config.git')
+    end
+  }
 end
 
 local useTerminal = function(use)
@@ -185,12 +212,7 @@ local useTerminal = function(use)
   }
 end
 
-local useTreesitter = function(use)
-  use {
-    'nvim-treesitter/nvim-treesitter',
-    run = ':TSUpdate'
-  }
-end
+
 
 local useMarkdown = function(use)
   use({
@@ -297,7 +319,6 @@ return require("packer").startup(function(use)
   useGit(use)
 
   useLang(use)
-  useTreesitter(use)
   useTelescope(use)
   useAcp(use)
   useLsp(use)
