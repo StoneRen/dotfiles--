@@ -60,9 +60,6 @@ require('mini.indentscope').setup()
 -- https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-pairs.md#default-config
 require('mini.pairs').setup()
 
--- https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-starter.md#default-config
--- require('mini.starter').setup()
-
 -- https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-statusline.md#default-config
 require('mini.statusline').setup()
 

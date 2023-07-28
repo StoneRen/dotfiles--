@@ -79,15 +79,59 @@ local useTodo = function(use)
   -- }
 end
 
+
+local useTabnine = function(use)
+  use {
+    'codota/tabnine-nvim',
+    run = "./dl_binaries.sh",
+    config = function()
+      local tabnine = require('tabnine')
+      local chat = require('tabnine.chat')
+      local bind = vim.api.nvim_set_keymap
+      tabnine.setup({
+        disable_auto_comment = false,
+        accept_keymap = "<Tab>",
+        dismiss_keymap = "<C-]>",
+        debounce_ms = 800,
+        suggestion_color = { gui = "#808080", cterm = 244 },
+        exclude_filetypes = { "TelescopePrompt" },
+        log_file_path = nil, -- absolute path to Tabnine log file
+      })
+      bind("x", "<leader>qc", "", { noremap = true, callback = chat.open })
+      bind("i", "<leader>qc", "", { noremap = true, callback = chat.open })
+      bind("n", "<leader>qc", "", { noremap = true, callback = chat.open })
+    end
+  }
+end
+
+local useSession = function(use)
+  use {
+    'Shatur/neovim-session-manager',
+    requires = {
+      'nvim-lua/plenary.nvim'
+    },
+    config = function()
+      require('stoneren.config.session')
+    end
+  }
+end
+
 local useBasic = function(use)
   use {
     'nvim-tree/nvim-web-devicons',
   }
 
-  use { 'codota/tabnine-nvim', run = "./dl_binaries.sh" }
-
+  use {
+    'mbbill/undotree',
+    config = function()
+      local bind = vim.keymap.set
+      bind('n', '<F5>', vim.cmd.UndotreeToggle)
+    end
+  }
   useTreesitter(use)
   useNeoTree(use)
+  useSession(use)
+  useTabnine(use)
   -- useTodo(use)
 
   use {
@@ -117,13 +161,13 @@ end
 
 local useNotify = function(use)
   use {
-    'rcarriga/nvim-notify',
+    'folke/noice.nvim',
+    requires = {
+      'MunifTanjim/nui.nvim',
+      'rcarriga/nvim-notify',
+    },
     config = function()
-      local notify = require("notify")
-      notify.setup {
-        background_colour = "#000000"
-      }
-      -- notify("welcome")
+      require('stoneren.config.noice')
     end
   }
 end
@@ -237,14 +281,20 @@ local useTelescope = function(use)
     config = function()
       require('stoneren.config.telescope')
     end,
-    requires = { {
-      "nvim-telescope/telescope-fzf-native.nvim",
-      run = 'make'
-    }, {
+    requires = {
+      {
+        "nvim-telescope/telescope-fzf-native.nvim",
+        run = 'make'
+      }, {
       "nvim-telescope/telescope-frecency.nvim",
       requires = { "kkharji/sqlite.lua" }
-    }, 'nvim-lua/plenary.nvim', "nvim-telescope/telescope-live-grep-args.nvim",
-      'nvim-telescope/telescope-project.nvim', "nvim-telescope/telescope-file-browser.nvim" }
+    },
+      'nvim-lua/plenary.nvim',
+      "nvim-telescope/telescope-live-grep-args.nvim",
+      'nvim-telescope/telescope-project.nvim',
+      "nvim-telescope/telescope-file-browser.nvim",
+      "nvim-telescope/telescope-ui-select.nvim"
+    }
   }
 end
 

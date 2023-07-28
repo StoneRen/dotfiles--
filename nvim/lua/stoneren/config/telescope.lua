@@ -3,11 +3,50 @@ local telescope = require('telescope')
 local bind = vim.keymap.set
 local builtin = require('telescope.builtin')
 
-telescope.setup {}
+telescope.setup {
+  extensions = {
+    fzf = {
+      fuzzy = true,                   -- false will only do exact matching
+      override_generic_sorter = true, -- override the generic sorter
+      override_file_sorter = true,    -- override the file sorter
+      case_mode = "smart_case",       -- or "ignore_case" or "respect_case"
+      -- the default case_mode is "smart_case"
+    },
+  }
+}
 
-bind('n', '<leader>tf', builtin.find_files, {})
+
+
+-- https://github.com/nvim-telescope/telescope.nvim/issues/2201#issuecomment-1485886554
+local Path = require("plenary.path")
+local action_state = require("telescope.actions.state")
+local actions = require("telescope.actions")
+
+local open_using = function(finder)
+  return function(prompt_bufnr)
+    local current_finder = action_state.get_current_picker(prompt_bufnr).finder
+    local entry = action_state.get_selected_entry()
+
+    local entry_path
+    if entry.ordinal == ".." then
+      entry_path = Path:new(current_finder.path)
+    else
+      entry_path = action_state.get_selected_entry().Path
+    end
+
+    local path = entry_path:is_dir() and entry_path:absolute() or entry_path:parent():absolute()
+    actions.close(prompt_bufnr)
+    finder({ cwd = path })
+  end
+end
+
+bind('n', '<leader>tf',':lua require("telescope-project").project_files()<CR>', {})
+-- bind('n', '<leader>tf', builtin.find_files, {})
 bind('n', '<leader>ts', builtin.grep_string, {})
-bind('n', '<leader>tg', builtin.live_grep, {})
+bind('n', '<leader>tg', builtin.git_files, {})
+-- bind('n', '<leader>tl', builtin.live_grep, {})
+-- 用下面的 `fg` 吧 更好用
+-- bind('n', '<leader>tl', ts_select_dir_for_grep, {})
 bind('n', '<leader>tb', builtin.buffers, {})
 bind('n', '<leader>th', builtin.help_tags, {})
 
@@ -41,7 +80,6 @@ bind('n', '<leader>te', ":tabnew | Telescope file_browser path=%:p:h select_buff
 | `<S-Tab>`       | see `telescope.nvim` | Toggle selection and move to prev selection                                      |
 | `<bs>/`         | backspace            | With an empty prompt, goes to parent dir. Otherwise acts normally                |
 --]]
-
 telescope.load_extension("frecency")
 bind('n', '<leader>fr', ":Telescope frecency<CR>", {})
 
@@ -58,3 +96,8 @@ bind('n', '<leader>fp', ":Telescope project<CR>", {})
 -- <c-f> find a file in currently selected project
 -- <c-r> find a recentyly opened file whithin currently selected project
 -- <c-l> change to the selected project's directory without opening it
+
+telescope.load_extension("notify")
+bind('n', '<leader>tn', ":Telescope notify<CR>", {})
+
+telescope.load_extension('ui-select')
