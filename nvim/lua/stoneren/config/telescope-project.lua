@@ -1,8 +1,8 @@
--- https://github.com/nvim-telescope/telescope.nvim/wiki/Configuration-Recipes#falling-back-to-find_files-if-git_files-cant-find-a-git-directory
+-- https://github.com/nvim-telescope/telescope.nvim/wiki/Configuration-Recipes
 local M = {}
 local builtin = require('telescope.builtin')
 local is_inside_work_tree = {}
-M.project_files = function()
+M.find_project_files = function()
   local opts = {} -- define here if you want to define something
 
   local cwd = vim.fn.getcwd()

@@ -12,7 +12,7 @@ telescope.setup {
       case_mode = "smart_case",       -- or "ignore_case" or "respect_case"
       -- the default case_mode is "smart_case"
     },
-  }
+  },
 }
 
 
@@ -22,25 +22,8 @@ local Path = require("plenary.path")
 local action_state = require("telescope.actions.state")
 local actions = require("telescope.actions")
 
-local open_using = function(finder)
-  return function(prompt_bufnr)
-    local current_finder = action_state.get_current_picker(prompt_bufnr).finder
-    local entry = action_state.get_selected_entry()
 
-    local entry_path
-    if entry.ordinal == ".." then
-      entry_path = Path:new(current_finder.path)
-    else
-      entry_path = action_state.get_selected_entry().Path
-    end
-
-    local path = entry_path:is_dir() and entry_path:absolute() or entry_path:parent():absolute()
-    actions.close(prompt_bufnr)
-    finder({ cwd = path })
-  end
-end
-
-bind('n', '<leader>tf',':lua require("telescope-project").project_files()<CR>', {})
+bind('n', '<leader>tf', ':lua require("telescope-project").project_files()<CR>', {})
 -- bind('n', '<leader>tf', builtin.find_files, {})
 bind('n', '<leader>ts', builtin.grep_string, {})
 bind('n', '<leader>tg', builtin.git_files, {})
