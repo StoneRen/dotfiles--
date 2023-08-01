@@ -2,6 +2,8 @@
 local M = {}
 local builtin = require('telescope.builtin')
 local is_inside_work_tree = {}
+
+-- 查询文件时，蝉寻项目文件
 M.find_project_files = function()
   local opts = {} -- define here if you want to define something
 
@@ -17,5 +19,8 @@ M.find_project_files = function()
     builtin.find_files(opts)
   end
 end
+
+-- 查询git的submodule
+-- https://github.com/nvim-telescope/telescope.nvim/issues/410
 
 return M

@@ -130,7 +130,7 @@ local useBasic = function(use)
   }
   useTreesitter(use)
   useNeoTree(use)
-  useSession(use)
+  -- useSession(use)
   useTabnine(use)
   -- useTodo(use)
 

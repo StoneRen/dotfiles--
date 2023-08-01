@@ -23,7 +23,7 @@ local action_state = require("telescope.actions.state")
 local actions = require("telescope.actions")
 
 
-bind('n', '<leader>tf', ':lua require("telescope-project").project_files()<CR>', {})
+bind('n', '<leader>tf', ':lua require("stoneren.config.telescope-project").find_project_files ()<CR>', {})
 -- bind('n', '<leader>tf', builtin.find_files, {})
 bind('n', '<leader>ts', builtin.grep_string, {})
 bind('n', '<leader>tg', builtin.git_files, {})
