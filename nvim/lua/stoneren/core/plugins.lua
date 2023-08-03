@@ -47,7 +47,7 @@ local useNeoTree = function(use)
 end
 
 -- 有问题，使用后，没有启动界面了
-local useTodo = function(use)
+-- local useTodo = function(use)
   -- use {
   --   "folke/todo-comments.nvim",
   --   requires = { "nvim-lua/plenary.nvim" },
@@ -77,7 +77,7 @@ local useTodo = function(use)
   --     })
   --   end,
   -- }
-end
+-- end
 
 
 local useTabnine = function(use)
@@ -285,14 +285,19 @@ local useTelescope = function(use)
       {
         "nvim-telescope/telescope-fzf-native.nvim",
         run = 'make'
-      }, {
-      "nvim-telescope/telescope-frecency.nvim",
-      requires = { "kkharji/sqlite.lua" }
-    },
+      },
+      {
+        "nvim-telescope/telescope-frecency.nvim",
+        requires = { "kkharji/sqlite.lua" }
+      },
       'nvim-lua/plenary.nvim',
+      'crispgm/telescope-heading.nvim',
+      'TC72/telescope-tele-tabby.nvim',
       "nvim-telescope/telescope-live-grep-args.nvim",
       'nvim-telescope/telescope-project.nvim',
       "nvim-telescope/telescope-file-browser.nvim",
+      "HUAHUAI23/telescope-session.nvim",
+      "debugloop/telescope-undo.nvim",
       "nvim-telescope/telescope-ui-select.nvim"
     }
   }

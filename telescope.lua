@@ -12,13 +12,6 @@ telescope.setup {
       case_mode = "smart_case",       -- or "ignore_case" or "respect_case"
       -- the default case_mode is "smart_case"
     },
-    frecency = {
-      show_unindexed = true,
-      ignore_patterns = { "*.git/*", "*/tmp/*" },
-    },
-    heading = {
-      treesitter = true,
-    }
   },
 }
 
@@ -26,35 +19,32 @@ local keymapOpt = {
   noremap = true, silent = true
 }
 
+
+
 -- https://github.com/nvim-telescope/telescope.nvim/issues/2201#issuecomment-1485886554
--- local Path = require("plenary.path")
--- local action_state = require("telescope.actions.state")
--- local actions = require("telescope.actions")
+local Path = require("plenary.path")
+local action_state = require("telescope.actions.state")
+local actions = require("telescope.actions")
 
 
-bind('n', '<leader>tf', ':lua require("stoneren.config.ts-project").find_project_files()<CR>', keymapOpt)
--- bind('n', '<leader>tf', builtin.find_files, keymapOpt)
--- bind('n', '<leader>ts', builtin.grep_string, keymapOpt)
-bind('n', '<leader>tg', builtin.git_files, keymapOpt)
--- bind('n', '<leader>tl', builtin.live_grep, keymapOpt)
+bind('n', '<leader>tf', ':lua require("stoneren.config.telescope-project").find_project_files ()<CR>', {})
+-- bind('n', '<leader>tf', builtin.find_files, {})
+bind('n', '<leader>ts', builtin.grep_string, {})
+bind('n', '<leader>tg', builtin.git_files, {})
+-- bind('n', '<leader>tl', builtin.live_grep, {})
 -- 用下面的 `fg` 吧 更好用
--- bind('n', '<leader>tl', ts_select_dir_for_grep, keymapOpt)
-bind('n', '<leader>tb', builtin.buffers, keymapOpt)
-bind('n', '<leader>th', builtin.help_tags, keymapOpt)
+-- bind('n', '<leader>tl', ts_select_dir_for_grep, {})
+bind('n', '<leader>tb', builtin.buffers, {})
+bind('n', '<leader>th', builtin.help_tags, {})
 
 telescope.load_extension("live_grep_args")
-bind('n', '<leader>fg', ":Telescope live_grep_args<CR>", keymapOpt)
+bind('n', '<leader>fg', ":Telescope live_grep_args<CR>", {})
 
 telescope.load_extension('fzf')
--- https://github.com/HUAHUAI23/telescope-session.nvim
-require("telescope").load_extension("xray23")
-bind('n', '<leader>tsl', ":Telescope xray23 list<CR>", keymapOpt)
-bind('n', '<leader>tss', ":Telescope xray23 save<CR>", keymapOpt)
-
 
 telescope.load_extension("file_browser")
-bind('n', '<leader>e', ":Telescope file_browser path=%:p:h select_buffer=true<CR>", keymapOpt)
-bind('n', '<leader>te', ":tabnew | Telescope file_browser path=%:p:h select_buffer=true<CR>", keymapOpt)
+bind('n', '<leader>e', ":Telescope file_browser path=%:p:h select_buffer=true<CR>", {})
+bind('n', '<leader>te', ":tabnew | Telescope file_browser path=%:p:h select_buffer=true<CR>", {})
 
 --[[
 | Insert / Normal | fb_actions           | Description                                                                      |
@@ -78,10 +68,10 @@ bind('n', '<leader>te', ":tabnew | Telescope file_browser path=%:p:h select_buff
 | `<bs>/`         | backspace            | With an empty prompt, goes to parent dir. Otherwise acts normally                |
 --]]
 telescope.load_extension("frecency")
-bind('n', '<leader>fr', ":Telescope frecency<CR>", keymapOpt)
+bind('n', '<leader>fr', ":Telescope frecency<CR>", {})
 
 telescope.load_extension('project')
-bind('n', '<leader>fp', ":Telescope project<CR>", keymapOpt)
+bind('n', '<leader>fp', ":Telescope project<CR>", {})
 -- 在打开项目窗口的时候，可以采用如下快捷键
 -- 下面全是在插入模式下
 -- <c-w> change workspace
@@ -95,16 +85,6 @@ bind('n', '<leader>fp', ":Telescope project<CR>", keymapOpt)
 -- <c-l> change to the selected project's directory without opening it
 
 telescope.load_extension("notify")
-bind('n', '<leader>tn', ":Telescope notify<CR>", keymapOpt)
+bind('n', '<leader>tn', ":Telescope notify<CR>", {})
 
 telescope.load_extension('ui-select')
-
-telescope.load_extension('heading')
-bind('n','<leader>th',":Telescope heading<CR>",keymapOpt)
-
-telescope.load_extension('tele_tabby')
-bind('n','<leader>tt',":Telescope tele_tabby list<CR>",keymapOpt)
-
-
-telescope.load_extension('undo')
-bind('n','<leader>tu',":Telescope undo<CR>",keymapOpt)
