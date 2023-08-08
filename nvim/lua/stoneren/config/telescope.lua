@@ -12,10 +12,10 @@ telescope.setup {
       case_mode = "smart_case",       -- or "ignore_case" or "respect_case"
       -- the default case_mode is "smart_case"
     },
-    frecency = {
-      show_unindexed = true,
-      ignore_patterns = { "*.git/*", "*/tmp/*" },
-    },
+    -- frecency = {
+    --   show_unindexed = true,
+    --   ignore_patterns = { "*.git/*", "*/tmp/*" },
+    -- },
     heading = {
       treesitter = true,
     }
@@ -47,9 +47,9 @@ bind('n', '<leader>fg', ":Telescope live_grep_args<CR>", keymapOpt)
 
 telescope.load_extension('fzf')
 -- https://github.com/HUAHUAI23/telescope-session.nvim
-require("telescope").load_extension("xray23")
-bind('n', '<leader>tsl', ":Telescope xray23 list<CR>", keymapOpt)
-bind('n', '<leader>tss', ":Telescope xray23 save<CR>", keymapOpt)
+-- require("telescope").load_extension("xray23")
+-- bind('n', '<leader>tsl', ":Telescope xray23 list<CR>", keymapOpt)
+-- bind('n', '<leader>tss', ":Telescope xray23 save<CR>", keymapOpt)
 
 
 telescope.load_extension("file_browser")
@@ -77,8 +77,8 @@ bind('n', '<leader>te', ":tabnew | Telescope file_browser path=%:p:h select_buff
 | `<S-Tab>`       | see `telescope.nvim` | Toggle selection and move to prev selection                                      |
 | `<bs>/`         | backspace            | With an empty prompt, goes to parent dir. Otherwise acts normally                |
 --]]
-telescope.load_extension("frecency")
-bind('n', '<leader>fr', ":Telescope frecency<CR>", keymapOpt)
+-- telescope.load_extension("frecency")
+-- bind('n', '<leader>fr', ":Telescope frecency<CR>", keymapOpt)
 
 telescope.load_extension('project')
 bind('n', '<leader>fp', ":Telescope project<CR>", keymapOpt)

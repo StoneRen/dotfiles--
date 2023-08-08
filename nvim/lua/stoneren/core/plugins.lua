@@ -48,35 +48,35 @@ end
 
 -- 有问题，使用后，没有启动界面了
 -- local useTodo = function(use)
-  -- use {
-  --   "folke/todo-comments.nvim",
-  --   requires = { "nvim-lua/plenary.nvim" },
-  --   config = function()
-  --     require("todo-comments").setup({
-  --       keywords = {
-  --         FIX = {
-  --           color = "error",                            -- can be a hex color, or a named color (see below)
-  --           alt = { "FIXME", "BUG", "FIXIT", "ISSUE" }, -- a set of other keywords that all map to this FIX keywords
-  --           -- signs = false, -- configure signs for some keywords individually
-  --         },
-  --         TODO = { color = "todo" },
-  --         HACK = { color = "warning" },
-  --         WARN = { color = "warning", alt = { "WARNING", "XXX" } },
-  --         PERF = { alt = { "OPTIM", "PERFORMANCE", "OPTIMIZE" } },
-  --         NOTE = { color = "info", alt = { "INFO" } },
-  --         TEST = { color = "test", alt = { "TESTING", "PASSED", "FAILED" } },
-  --       },
-  --       colors = {
-  --         error = { "DiagnosticError", "ErrorMsg", "#DC2626" },
-  --         warning = { "DiagnosticWarn", "WarningMsg", "#FBBF24" },
-  --         todo = { "DiagnosticOk", "#2563EB" },
-  --         info = { "DiagnosticInfo", "#10B981" },
-  --         default = { "Identifier", "#7C3AED" },
-  --         test = { "Identifier", "#FF00FF" },
-  --       },
-  --     })
-  --   end,
-  -- }
+-- use {
+--   "folke/todo-comments.nvim",
+--   requires = { "nvim-lua/plenary.nvim" },
+--   config = function()
+--     require("todo-comments").setup({
+--       keywords = {
+--         FIX = {
+--           color = "error",                            -- can be a hex color, or a named color (see below)
+--           alt = { "FIXME", "BUG", "FIXIT", "ISSUE" }, -- a set of other keywords that all map to this FIX keywords
+--           -- signs = false, -- configure signs for some keywords individually
+--         },
+--         TODO = { color = "todo" },
+--         HACK = { color = "warning" },
+--         WARN = { color = "warning", alt = { "WARNING", "XXX" } },
+--         PERF = { alt = { "OPTIM", "PERFORMANCE", "OPTIMIZE" } },
+--         NOTE = { color = "info", alt = { "INFO" } },
+--         TEST = { color = "test", alt = { "TESTING", "PASSED", "FAILED" } },
+--       },
+--       colors = {
+--         error = { "DiagnosticError", "ErrorMsg", "#DC2626" },
+--         warning = { "DiagnosticWarn", "WarningMsg", "#FBBF24" },
+--         todo = { "DiagnosticOk", "#2563EB" },
+--         info = { "DiagnosticInfo", "#10B981" },
+--         default = { "Identifier", "#7C3AED" },
+--         test = { "Identifier", "#FF00FF" },
+--       },
+--     })
+--   end,
+-- }
 -- end
 
 
@@ -104,17 +104,17 @@ local useTabnine = function(use)
   }
 end
 
-local useSession = function(use)
-  use {
-    'Shatur/neovim-session-manager',
-    requires = {
-      'nvim-lua/plenary.nvim'
-    },
-    config = function()
-      require('stoneren.config.session')
-    end
-  }
-end
+-- local useSession = function(use)
+--   use {
+--     'Shatur/neovim-session-manager',
+--     requires = {
+--       'nvim-lua/plenary.nvim'
+--     },
+--     config = function()
+--       require('stoneren.config.session')
+--     end
+--   }
+-- end
 
 local useBasic = function(use)
   use {
@@ -278,29 +278,30 @@ local useTelescope = function(use)
   use {
     'nvim-telescope/telescope.nvim',
     tag = '0.1.x',
-    config = function()
-      require('stoneren.config.telescope')
-    end,
+    -- config = function()
+    --   require('stoneren.config.telescope')
+    -- end,
     requires = {
       {
         "nvim-telescope/telescope-fzf-native.nvim",
         run = 'make'
       },
-      {
-        "nvim-telescope/telescope-frecency.nvim",
-        requires = { "kkharji/sqlite.lua" }
-      },
-      'nvim-lua/plenary.nvim',
-      'crispgm/telescope-heading.nvim',
-      'TC72/telescope-tele-tabby.nvim',
-      "nvim-telescope/telescope-live-grep-args.nvim",
-      'nvim-telescope/telescope-project.nvim',
-      "nvim-telescope/telescope-file-browser.nvim",
-      "HUAHUAI23/telescope-session.nvim",
-      "debugloop/telescope-undo.nvim",
-      "nvim-telescope/telescope-ui-select.nvim"
+      -- {
+      --   "nvim-telescope/telescope-frecency.nvim",
+      --   requires = { "kkharji/sqlite.lua" }
+      -- },
     }
   }
+  use('nvim-lua/plenary.nvim')
+  use('crispgm/telescope-heading.nvim')
+  use('TC72/telescope-tele-tabby.nvim')
+  use("nvim-telescope/telescope-live-grep-args.nvim")
+  use('nvim-telescope/telescope-project.nvim')
+  use("nvim-telescope/telescope-file-browser.nvim")
+  -- use("HUAHUAI23/telescope-session.nvim")
+  use("debugloop/telescope-undo.nvim")
+  use("nvim-telescope/telescope-ui-select.nvim")
+  require('stoneren.config.telescope')
 end
 
 local useAcp = function(use)
