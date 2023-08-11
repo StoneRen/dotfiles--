@@ -133,6 +133,22 @@ local useBasic = function(use)
   -- useSession(use)
   useTabnine(use)
   -- useTodo(use)
+  
+  -- MRU
+  -- use{
+  --   'ilAYAli/scMRU.nvim',
+  --   config = function ()
+  --     local bind = vim.api.nvim_set_keymap
+  --     local keymapOpt = {
+  --       noremap = true,
+  --       silent = true
+  --     }
+  --
+  --     bind('n','<F2>',':MruRepos<CR>',keymapOpt)
+  --     bind('n','<F3>',':Mru<CR>',keymapOpt)
+  --     bind('n','<F4>',':Mfu<CR>',keymapOpt)
+  --   end
+  -- }
 
   use {
     'windwp/nvim-ts-autotag',
@@ -286,10 +302,10 @@ local useTelescope = function(use)
         "nvim-telescope/telescope-fzf-native.nvim",
         run = 'make'
       },
-      -- {
-      --   "nvim-telescope/telescope-frecency.nvim",
-      --   requires = { "kkharji/sqlite.lua" }
-      -- },
+      {
+        "nvim-telescope/telescope-frecency.nvim",
+        requires = { "kkharji/sqlite.lua" }
+      },
     }
   }
   use('nvim-lua/plenary.nvim')
@@ -332,7 +348,7 @@ local useLsp = function(use)
       {
         -- Optional
         'williamboman/mason.nvim',
-        run = ":MasonUpdate"
+        run = ":MasonUpdate",
       }, { 'williamboman/mason-lspconfig.nvim' }, -- Optional
       -- Autocompletion
       { 'hrsh7th/nvim-cmp' },                     -- Required
