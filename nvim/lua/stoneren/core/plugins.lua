@@ -121,6 +121,13 @@ local useBasic = function(use)
     'nvim-tree/nvim-web-devicons',
   }
 
+  use { 'nvimdev/hlsearch.nvim',
+    event = 'BufRead',
+    config = function()
+      require('hlsearch').setup()
+    end
+  }
+
   use {
     'mbbill/undotree',
     config = function()
@@ -133,7 +140,7 @@ local useBasic = function(use)
   -- useSession(use)
   useTabnine(use)
   -- useTodo(use)
-  
+
   -- MRU
   -- use{
   --   'ilAYAli/scMRU.nvim',
@@ -277,12 +284,7 @@ end
 local useMarkdown = function(use)
   use({
     "iamcco/markdown-preview.nvim",
-    run = "cd app && npm install",
-    setup = function()
-      vim.g.mkdp_filetypes = { "markdown" }
-      vim.keymap.set("n", "<leader>mp", "<cmd>MarkdownPreviewToggle<cr>", { noremap = true, silent = true })
-    end,
-    ft = { "markdown" }
+    run = function() vim.fn["mkdp#util#install"]() end,
   })
 end
 
@@ -337,6 +339,15 @@ local useAcp = function(use)
       require("stoneren.config.acp")
     end
   }) -- completion plugin
+  use({
+    "roobert/tailwindcss-colorizer-cmp.nvim",
+    -- optionally, override the default options:
+    config = function()
+      require("tailwindcss-colorizer-cmp").setup({
+        color_square_width = 2,
+      })
+    end
+  })
 end
 
 local useLsp = function(use)
@@ -353,7 +364,26 @@ local useLsp = function(use)
       -- Autocompletion
       { 'hrsh7th/nvim-cmp' },                     -- Required
       { 'hrsh7th/cmp-nvim-lsp' },                 -- Required
-      { 'L3MON4D3/LuaSnip' }                      -- Required
+      {
+        'nvimdev/lspsaga.nvim',
+        after = "nvim-lspconfig",
+        config = function()
+          local lspsaga = require('lspsaga')
+          lspsaga.setup({})
+          local opts = { noremap = true, silent = true }
+          local bind = vim.keymap.set
+          bind('n', '<C-j>', '<Cmd>Lspsaga diagnostic_jump_next<CR>', opts)
+          bind('n', 'K', '<Cmd>Lspsaga hover_doc<CR>', opts)
+          bind('n', 'gd', '<Cmd>Lspsaga lsp_finder<CR>', opts)
+          bind('i', '<C-k>', '<Cmd>Lspsaga signature_help<CR>', opts)
+          bind('n', 'gp', '<Cmd>Lspsaga preview_definition<CR>', opts)
+          bind('n', 'gr', '<Cmd>Lspsaga rename<CR>', opts)
+        end
+      },
+      {
+        'nvim-treesitter/nvim-treesitter',
+      },
+      { 'L3MON4D3/LuaSnip' } -- Required
     },
     config = function()
       require('stoneren.config.lsp')

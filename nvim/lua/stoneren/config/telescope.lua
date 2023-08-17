@@ -100,11 +100,12 @@ bind('n', '<leader>tn', ":Telescope notify<CR>", keymapOpt)
 telescope.load_extension('ui-select')
 
 telescope.load_extension('heading')
-bind('n','<leader>th',":Telescope heading<CR>",keymapOpt)
+bind('n', '<leader>th', ":Telescope heading<CR>", keymapOpt)
 
 telescope.load_extension('tele_tabby')
-bind('n','<leader>tt',":Telescope tele_tabby list<CR>",keymapOpt)
+bind('n', '<leader>tt', ":Telescope tele_tabby list<CR>", keymapOpt)
 
 
 telescope.load_extension('undo')
-bind('n','<leader>tu',":Telescope undo<CR>",keymapOpt)
+bind('n', '<leader>tu', ":Telescope undo<CR>", keymapOpt)
+
